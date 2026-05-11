@@ -1,0 +1,85 @@
+{
+  "instances": {
+    "manga": {
+      "url": "http://localhost:4567",
+      "sources": [
+        "1024627298672457456",
+        "2522335540328470744",
+        "4972933717624256217",
+        "2900023289777642714",
+        "3606721916149050760",
+        "2527199067559866087",
+        "7537715367149829912"
+      ]
+    },
+    "ecchi": {
+      "url": "http://localhost:4568",
+      "sources": [
+        "7945033982379409892",
+        "1759845183972082995",
+        "690123758188633713",
+        "2220258354919443918",
+        "6915411826598362561"
+      ]
+    }
+  },
+  "routing": {
+    "default_route": "manga",
+    "genres": {
+      "manga": [
+        "Action", "Adventure", "Comedy", "Drama", "Fantasy",
+        "Horror", "Mystery", "Psychological", "Sci-Fi", "Shounen",
+        "Slice of Life", "Sports", "Supernatural", "Thriller",
+        "Seinen", "Shoujo", "Kids", "Historical",
+        "Military", "Music", "Mecha", "Parody",
+        "Demons", "Game", "Harem", "Martial Arts",
+        "Space", "Vampire", "Isekai", "School Life", "Magic",
+        "Super Power", "Samurai", "Suspense", "Gore",
+        "Time Travel", "Post-Apocalyptic", "Cyberpunk"
+      ],
+      "ecchi": [
+        "Ecchi", "Hentai", "Adult", "Yaoi", "Yuri", "Smut",
+        "Gender Bender"
+      ]
+    }
+  },
+  "lists": [
+    {
+      "type": "anilist_top",
+      "sort": "POPULARITY_DESC",
+      "count": 100,
+      "label": "AniList Popular (Top 100)",
+      "category": "Popular"
+    },
+    {
+      "type": "anilist_user",
+      "username": "yuuki",
+      "label": "yuuki"
+    },
+    {
+      "type": "anilist_user",
+      "username": "edvudvdv",
+      "label": "edvudvdv"
+    },
+    {
+      "type": "anilist_user",
+      "username": "twins",
+      "label": "twins"
+    },
+    {
+      "type": "anilist_user",
+      "username": "healthy",
+      "label": "healthy"
+    },
+    {
+      "type": "anilist_user",
+      "username": "vectorhugo",
+      "label": "vectorhugo"
+    },
+    {
+      "type": "anilist_user",
+      "username": "ElusiveFangirl",
+      "label": "ElusiveFangirl"
+    }
+  ]
+}

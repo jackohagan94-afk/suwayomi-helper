@@ -1,0 +1,27 @@
+# Suwayomi Pipeline .gitignore
+
+# Generated data
+pipeline.log
+report.json
+mappings.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Temp / debugging scripts (not part of the pipeline)
+check_*.py
+find_*.py
+test_*.py
+try_*.py
+fix_bleach.py
+migrate_one.py
+migrate_remaining.py
+check_*.json
+discover-sources.py
+list_sources.py
+
+# OS junk
+.DS_Store
+Thumbs.db

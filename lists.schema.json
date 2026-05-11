@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://suwayomi-pipeline/lists.schema.json",
+  "title": "Suwayomi Pipeline Lists Config",
+  "description": "Configuration for the Suwayomi multi-source import pipeline",
+  "type": "object",
+  "properties": {
+    "instances": {
+      "description": "Suwayomi server instances keyed by route name",
+      "type": "object",
+      "patternProperties": {
+        "^[a-z_]+$": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Base URL of the Suwayomi instance (e.g. http://localhost:4567)"
+            },
+            "sources": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Source extension IDs (from Suwayomi) in priority order"
+            }
+          },
+          "required": ["url"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "description": "Global source IDs (used if per-instance sources not specified)",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "lists": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["anilist_user", "anilist_top", "anilist_ids", "mal_stack"]
+          },
+          "route": {
+            "type": "string",
+            "default": "manga",
+            "description": "Target instance route (must match a key in 'instances')"
+          },
+          "label": { "type": "string", "description": "Display label for logs" },
+          "category": { "type": "string", "description": "Suwayomi category to assign" },
+          "username": { "type": "string" },
+          "status": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Status filter for anilist_user lists"
+          },
+          "token": { "type": "string", "description": "AniList OAuth token (private lists)" },
+          "count": { "type": "integer", "minimum": 1 },
+          "sort": { "type": "string" },
+          "ids": {
+            "type": "array",
+            "items": { "type": "integer" }
+          },
+          "url": { "type": "string", "format": "uri", "description": "MAL stack URL" }
+        },
+        "required": ["type"],
+        "allOf": [
+          {
+            "if": { "properties": { "type": { "const": "anilist_user" } } },
+            "then": { "required": ["username"] }
+          },
+          {
+            "if": { "properties": { "type": { "const": "anilist_ids" } } },
+            "then": { "required": ["ids"] }
+          },
+          {
+            "if": { "properties": { "type": { "const": "mal_stack" } } },
+            "then": { "required": ["url"] }
+          }
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["lists"],
+  "additionalProperties": false
+}
