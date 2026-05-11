@@ -1,10 +1,26 @@
 # suwayomi-pipeline
 
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+
 Multi-source manga import pipeline for [Suwayomi](https://github.com/Suwayomi/Suwayomi-Server) with genre-based routing, parallel source matching, persistent deduplication, structured reporting, and batch source migration.
 
 ## Overview
 
 Import manga from AniList and MyAnimeList stacks into multiple Suwayomi instances, automatically routing entries by genre (e.g., ecchi/hentai → dedicated instance), resolving the best match across multiple Suwayomi extensions in parallel, and assigning categories from the original list structure. A separate migration tool upgrades existing library entries to higher-priority sources.
+
+## Getting Started
+
+```bash
+git clone https://github.com/jackohagan94-afk/suwayomi-pipeline.git
+cd suwayomi-pipeline
+pip install beautifulsoup4 lxml
+
+# Edit lists.json with your AniList usernames and Suwayomi source IDs
+# Then run:
+python3 pipeline.py
+```
 
 ## Architecture
 
