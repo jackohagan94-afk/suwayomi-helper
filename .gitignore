@@ -21,8 +21,19 @@ migrate_remaining.py
 check_*.json
 discover-sources.py
 list_sources.py
+mal_stacks.py
+find_specific_refs.sh
+
+# Shell helpers (user-local, not part of the pipeline)
+run_pipeline.sh
+run-import.sh
 
 # OS junk
 .DS_Store
 Thumbs.db
 Komga-Enhanced-Scrobbler/
+
+# User config (commit lists.example.json instead)
+lists.json
+migrate.py
+reporter.py

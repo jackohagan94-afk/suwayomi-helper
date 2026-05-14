@@ -1,0 +1,46 @@
+{
+  "instances": {
+    "manga": {
+      "url": "http://localhost:4567",
+      "sources": [
+        "SOURCE_ID_1",
+        "SOURCE_ID_2"
+      ]
+    },
+    "ecchi": {
+      "url": "http://localhost:4568",
+      "sources": [
+        "SOURCE_ID_3",
+        "SOURCE_ID_4"
+      ]
+    }
+  },
+  "routing": {
+    "default_route": "manga",
+    "genres": {
+      "manga": [
+        "Action", "Adventure", "Comedy", "Drama", "Fantasy",
+        "Horror", "Mystery", "Psychological", "Sci-Fi", "Shounen",
+        "Slice of Life", "Sports", "Supernatural", "Thriller",
+        "Seinen", "Shoujo", "Historical", "Isekai"
+      ],
+      "ecchi": [
+        "Ecchi", "Hentai", "Adult"
+      ]
+    }
+  },
+  "lists": [
+    {
+      "type": "anilist_top",
+      "sort": "POPULARITY_DESC",
+      "count": 100,
+      "label": "AniList Popular (Top 100)",
+      "category": "Popular"
+    },
+    {
+      "type": "anilist_user",
+      "username": "your_anilist_user",
+      "label": "My List"
+    }
+  ]
+}
