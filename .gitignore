@@ -10,23 +10,20 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Temp / debugging scripts (not part of the pipeline)
-check_*.py
-find_*.py
-test_*.py
-try_*.py
+# Temp / debugging scripts (root only, not tests/)
+/check_*.py
+/find_*.py
+/test_*.py
+/try_*.py
 fix_bleach.py
 migrate_one.py
 migrate_remaining.py
 check_*.json
 discover-sources.py
 list_sources.py
-mal_stacks.py
-find_specific_refs.sh
 
 # Shell helpers (user-local, not part of the pipeline)
-run_pipeline.sh
-run-import.sh
+run_import.sh
 
 # OS junk
 .DS_Store
@@ -36,4 +33,3 @@ Komga-Enhanced-Scrobbler/
 # User config (commit lists.example.json instead)
 lists.json
 migrate.py
-reporter.py

@@ -155,10 +155,26 @@ def main():
     parser.add_argument("--anilist-token")
     parser.add_argument("--log-file", default="pipeline.log")
     parser.add_argument("--no-log-file", action="store_true")
-    parser.add_argument("--workers", type=int, default=3)
-    parser.add_argument("--batch-size", type=int, default=25)
-    parser.add_argument("--version", action="version", version=f"suwayomi-pipeline v{VERSION}")
-    args = parser.parse_args()
+     parser.add_argument("--workers", type=int, default=3)
+     parser.add_argument("--batch-size", type=int, default=25)
+     parser.add_argument("--list-sources", action="store_true", help="List available Suwayomi sources and exit")
+     parser.add_argument("--url", default=DEFAULT_URL, help="Suwayomi instance URL (for --list-sources)")
+     parser.add_argument("--version", action="version", version=f"suwayomi-pipeline v{VERSION}")
+     args = parser.parse_args()
+
+     if args.list_sources:
+         init_log_file(args.log_file)
+         sources = suwayomi.get_sources(args.url)
+         if not sources:
+             print(f"No sources found at {args.url} — is Suwayomi running?")
+             sys.exit(1)
+         print(f"\nAvailable sources at {args.url}:")
+         print(f"{'ID':<30} {'Name'}")
+         print("-" * 60)
+         for s in sorted(sources, key=lambda x: x.get("name", "")):
+             log("SYS", 0, 0, "Source", "list", f"{s.get('id',''):<30} {s.get('name','')}")
+         close_log()
+         sys.exit(0)
 
     threshold = args.threshold / 100.0
 
