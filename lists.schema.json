@@ -2,11 +2,21 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://suwayomi-pipeline/lists.schema.json",
   "title": "Suwayomi Pipeline Lists Config",
-  "description": "Configuration for the Suwayomi multi-source import pipeline",
+  "description": "Configuration for the Suwayomi single-instance import pipeline",
   "type": "object",
   "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Base URL of the Suwayomi instance (e.g. http://localhost:4567)"
+    },
+    "sources": {
+      "description": "Source extension IDs (from Suwayomi) in priority order",
+      "type": "array",
+      "items": { "type": "string" }
+    },
     "instances": {
-      "description": "Suwayomi server instances keyed by route name",
+      "description": "Multi-instance mode (optional). Suwayomi server instances keyed by route name.",
       "type": "object",
       "patternProperties": {
         "^[a-z_]+$": {
@@ -15,12 +25,12 @@
             "url": {
               "type": "string",
               "format": "uri",
-              "description": "Base URL of the Suwayomi instance (e.g. http://localhost:4567)"
+              "description": "Base URL of the Suwayomi instance"
             },
             "sources": {
               "type": "array",
               "items": { "type": "string" },
-              "description": "Source extension IDs (from Suwayomi) in priority order"
+              "description": "Source extension IDs in priority order"
             }
           },
           "required": ["url"],
@@ -29,10 +39,19 @@
       },
       "additionalProperties": false
     },
-    "sources": {
-      "description": "Global source IDs (used if per-instance sources not specified)",
-      "type": "array",
-      "items": { "type": "string" }
+    "routing": {
+      "type": "object",
+      "properties": {
+        "default_route": {
+          "type": "string",
+          "default": "default",
+          "description": "Default route name (must match a key in 'instances' or 'default')"
+        },
+        "genres": {
+          "type": "object",
+          "description": "Genre-to-route mapping for multi-instance mode"
+        }
+      }
     },
     "lists": {
       "type": "array",
@@ -45,7 +64,7 @@
           },
           "route": {
             "type": "string",
-            "default": "manga",
+            "default": "default",
             "description": "Target instance route (must match a key in 'instances')"
           },
           "label": { "type": "string", "description": "Display label for logs" },

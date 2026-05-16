@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-suwayomi-pipeline  v2.0.0
-Multi-source manga import pipeline for Suwayomi.
+suwayomi-pipeline  v3.0.0
+Single-instance manga import pipeline for Suwayomi.
 
 Usage:
     python3 pipeline.py [options]
@@ -35,7 +35,7 @@ import suwayomi
 import reporter
 import persist
 
-VERSION = "2.0.0"
+VERSION = "3.0.0"
 
 DEFAULT_SOURCES = [
     "1024627298672457456",
@@ -44,10 +44,7 @@ DEFAULT_SOURCES = [
     "1201694572804778862",
 ]
 
-DEFAULT_INSTANCES = {
-    "manga": {"url": "http://localhost:4567", "sources": DEFAULT_SOURCES},
-    "ecchi": {"url": "http://localhost:4568", "sources": DEFAULT_SOURCES},
-}
+DEFAULT_URL = "http://localhost:4567"
 
 # ── Graceful shutdown ────────────────────────────────────────
 _shutdown = False
@@ -80,10 +77,10 @@ def load_config(path: str) -> dict:
 def _ensure_instances(config: dict) -> dict:
     if "instances" in config:
         return config["instances"]
+    url = config.get("url", DEFAULT_URL)
     sources = config.get("sources", DEFAULT_SOURCES)
     return {
-        "manga": {"url": "http://localhost:4567", "sources": list(sources)},
-        "ecchi": {"url": "http://localhost:4568", "sources": list(sources)},
+        "default": {"url": url, "sources": list(sources)},
     }
 
 
@@ -149,7 +146,7 @@ def _check_health(instances: dict) -> bool:
 def main():
     global _shutdown
 
-    parser = argparse.ArgumentParser(description="Suwayomi multi-source import pipeline")
+    parser = argparse.ArgumentParser(description="Suwayomi single-instance import pipeline")
     parser.add_argument("--config", default="lists.json")
     parser.add_argument("--threshold", type=int, default=85)
     parser.add_argument("--delay", type=float, default=1.0)
@@ -220,9 +217,9 @@ def main():
     log("SYS", 0, 0, "Phase 1", "done", f"{len(raw)} raw entries")
     _check_shutdown()
 
-    # ── Genre Routing ───────────────────────────────────────
+    # ── Genre Routing (pass-through for single instance) ────
     route_cfg = config.get("routing", {})
-    default_route = route_cfg.get("default_route", "manga")
+    default_route = route_cfg.get("default_route", "default")
     genre_rules = route_cfg.get("genres", {})
     raw = router_mod.apply_routing(raw, genre_rules, default_route)
     log("SYS", 0, 0, "Routing", "done", f"{len(raw)} routed entries")
