@@ -49,6 +49,7 @@ def resolve(entries: list[NormalizedEntry], instances: dict[str, dict],
         found_manga = None
         found_score = 0.0
         found_source = None
+        preferred_source = inst.get("preferred_source")
         source_ids = sources
 
         for title in entry.title_candidates:
@@ -67,6 +68,9 @@ def resolve(entries: list[NormalizedEntry], instances: dict[str, dict],
                     found_manga = manga
                     found_score = s
                     found_source = sid
+                    # Preferred source boost (Weeb Central etc.)
+                    if preferred_source and sid == preferred_source:
+                        found_score = min(1.0, found_score + 0.03)
                     for f in fut_map:
                         f.cancel()
                     break

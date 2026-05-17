@@ -6,14 +6,6 @@ import suwayomi
 import reporter
 
 
-def _resolve_category(url: str, name: str) -> int | None:
-    cats = suwayomi.get_categories(url)
-    for cat in cats:
-        if cat["name"].lower() == name.lower():
-            return cat["id"]
-    created = suwayomi.create_category(url, name)
-    return created["id"] if created else None
-
 
 def _best_source_name(sources: list[dict], source_id: str) -> str:
     for s in sources:
@@ -75,13 +67,7 @@ def import_mappings(mappings: list[ResolvedMapping], instances: dict[str, dict],
             stats["imported"] += 1
             reporter.record_import(entry, manga["id"], "imported")
 
-        cat_name = entry.metadata.get("category", "")
-        if cat_name and not dry_run:
-            cat_id = _resolve_category(url, cat_name)
-            if cat_id:
-                ok = suwayomi.assign_category(url, manga["id"], cat_id)
-                log("P3", i, total, primary, src_name,
-                    f"{'assigned' if ok else 'FAILED'} category '{cat_name}'")
+        # Categories disabled - all manga go to default category
 
         if bind_tracker and al_id and not dry_run:
             ok = suwayomi.bind_tracker(url, manga["id"], al_id)
